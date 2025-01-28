@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ForestQ</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="header-image">
+        <img src="img/header-img.png" alt="Header Image" />
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="laporan_add.php">Data Laporan</a></li>
+          <li><a href="penanganan_add.php">Data Penanganan</a></li>
+          <li><a href="view.php">Detail Laporan</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section id="peta" class="my-5">
+      <h2>Peta Kebakaran Hutan</h2>
+      <div id="peta" style="height: 500px"></div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container">
+        <h2>Contact Us</h2>
+        <form action="https://formspree.io/f/xeojeebg" method="POST">
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            required
+          /><br /><br />
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            required
+          /><br /><br />
+          <textarea
+            placeholder="Your Message"
+            name="message"
+            required
+          ></textarea
+          ><br /><br />
+          <button type="submit" class="button">Send Message</button><br /><br />
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 ForestQ. All rights reserved.</p>
+        <p>Designed by Salma Oktarina</p>
+      </div>
+    </footer>
+
+    <script>
+      // Inisialisasi Peta
+      const map = L.map("peta").setView([-2.5489, 118.0149], 5); // Koordinat Indonesia
+
+      // Tambahkan layer peta (OpenStreetMap)
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      // Data lokasi kebakaran hutan (contoh)
+      const fireLocations = [
+        { name: "Kebakaran Kalimantan", lat: -0.5, lng: 114.5 },
+        { name: "Kebakaran Sumatra", lat: -1.5, lng: 102.5 },
+        { name: "Kebakaran Papua", lat: -4.2, lng: 138.5 },
+      ];
+
+      // Tambahkan marker untuk lokasi kebakaran
+      fireLocations.forEach((fire) => {
+        L.marker([fire.lat, fire.lng])
+          .addTo(map)
+          .bindPopup(`<b>${fire.name}</b>`);
+      });
+
+      // Data lokasi hutan (contoh)
+      const forestLocations = [
+        { name: "Hutan Kalimantan", lat: 0.5, lng: 113.5 },
+        { name: "Hutan Sumatra", lat: -1.2, lng: 100.5 },
+        { name: "Hutan Papua", lat: -4.8, lng: 137.8 },
+      ];
+
+      // Tambahkan circle marker untuk lokasi hutan
+      forestLocations.forEach((forest) => {
+        L.circle([forest.lat, forest.lng], {
+          color: "green",
+          fillColor: "#32a852",
+          fillOpacity: 0.5,
+          radius: 30000, // Radius dalam meter
+        })
+          .addTo(map)
+          .bindPopup(`<b>${forest.name}</b>`);
+      });
+    </script>
+
+    <!-- Lokasi: index.html -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha384-pAtwYv5qN4Pb9+wV3tpGpNTXUixNv2VpL+2YocTIa1PDEKDKBpn/YZ7PbUTruFk2"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha384-QW2o2+jpsW4tZmA4rWf/ckOYmZ+tUnLY5v3O+3iPiQ5f9m+ZqREYYKKA+jCXE2RO"
+      crossorigin="anonymous"
+    />
+  </body>
+</html>
